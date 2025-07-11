@@ -91,41 +91,39 @@ public class Listasproyect {
         }
     }
     public void mostrarProyectocondocenteX() {
-    	System.out.println("Docente que desea buscar");
-    	Scanner lee = new Scanner(System.in);
-    	String docente = lee.nextLine();
+        Scanner lee = new Scanner(System.in);
+        System.out.print("Docente que desea buscar: ");
+        String docente = lee.nextLine();
         nodoproyecto p = getTop();
-       
         boolean sw = false;
 
         while (p != null) {
             nodoc inicio = p.getDato().getListaprofesor().getTop();
+            nodoc x = inicio;
 
-            if (inicio != null) {
-                nodoc actual = inicio;
-
-                do {
-                    if (actual.getDato().getNombre().equalsIgnoreCase(docente)) {
-                        p.getDato().mostrarDatosProyecto();
-                        System.out.println(" ");
-                        p.getDato().getListaprofesor().mostrarListaCircular();
-                        System.out.println(" ");
-                        p.getDato().getListaestudiante().mostrarListaSimple();
-                        System.out.println("----------------------------------------------");
-                        sw = true;
-                        break; 
-                    }
-                    actual = actual.getSiguiente();
-                } while (actual != null && actual != inicio); 
+            while (x != null && x.getSiguiente() != null) {
+                if (x.getDato().getNombre().equalsIgnoreCase(docente)) {
+                    p.getDato().mostrarDatosProyecto();
+                    System.out.println();
+                    p.getDato().getListaprofesor().mostrarListaCircular();
+                    System.out.println();
+                    p.getDato().getListaestudiante().mostrarListaSimple();
+                   
+                    sw = true;
+                    break;
+                }
+                x = x.getSiguiente();
+                if (x == inicio) break;
+                
             }
+           
 
             p = p.getSiguiente();
         }
 
-        if (!sw) {
-            System.out.println("No hay proyectos con el docente \"" + docente + "\".");
-        }
+        if (!sw) System.out.println("No hay proyectos con el docente " + docente );
     }
+
 
     public void mostrarProyectoFinalizadoX(String fecha) {
         nodoproyecto p = getTop();
